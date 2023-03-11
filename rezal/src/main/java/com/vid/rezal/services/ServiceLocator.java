@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.vid.rezal.model.Customer;
 import com.vid.rezal.model.ErrorCodes;
@@ -85,5 +87,24 @@ public class ServiceLocator {
 			view.setResponse(Statics.FAILURE);
 		} 
 		return view;
+	}
+	
+
+	public ViewData<String> sendMessageToUser(String name, String text) {
+		ViewData<String> view = new ViewData<>();
+		String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
+        String apiToken = "6160419969:AAHvxFn2seQQH6EBfA7D5nVKtgQFi32UnhE";
+        if(!customerRepo.existsByName(name)) {
+        	view.setData(ErrorDescriptions.NOCUSTOMERAVAILABLE);
+        	return view;
+        }
+        Customer customer = customerRepo.findByName(name);
+        String chatId = Long.toString(customer.getChatId());
+        urlString = String.format(urlString, apiToken, chatId, text);
+        RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.getForEntity(urlString, String.class);
+	//	System.out.println(response.getBody());
+		view.setData("Message sent to "+name+"   your text is "+text);
+	return view;
 	}
 }

@@ -32,4 +32,11 @@ public class RezalController {
 	public ViewData<Customer> getCustomerByName(@RequestParam String name){
 		return service.getCustomerByName(name);
 	}
+	
+	@GetMapping("/sendMessageToUser")
+	public ViewData<String> sendMessageToUser(
+			@RequestParam String name,
+			@RequestParam String text){
+		return service.sendMessageToUser(name,text);
+	}
 }
