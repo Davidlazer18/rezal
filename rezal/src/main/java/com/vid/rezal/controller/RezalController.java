@@ -39,4 +39,9 @@ public class RezalController {
 			@RequestParam String text){
 		return service.sendMessageToUser(name,text);
 	}
+	@GetMapping("/getChat")
+	public ViewData<String> getChat(@RequestParam String text){
+		return service.getChat(text);
+	}
 }
+
