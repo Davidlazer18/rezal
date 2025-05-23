@@ -23,6 +23,9 @@ public class Customer {
     @Column(name = "chatId",nullable = false)
     private Long chatId;
     
+    @Column(nullable = true)
+    private String whatsappPhoneNumber;
+    
 	public int getId() {
 		return id;
 	}
@@ -53,6 +56,14 @@ public class Customer {
 
 	public void setChatId(Long chatId) {
 		this.chatId = chatId;
+	}
+
+	public String getWhatsappPhoneNumber() {
+		return whatsappPhoneNumber;
+	}
+
+	public void setWhatsappPhoneNumber(String whatsappPhoneNumber) {
+		this.whatsappPhoneNumber = whatsappPhoneNumber;
 	}
 
 	
